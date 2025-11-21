@@ -6,8 +6,6 @@ cut_sizes = [int(i) for i in input("enter the cut sizes(ex: 1 2 3): ").split(" "
 
 demands = [int(i) for i in input("enter the demands(ex: 1 2 3): ").split(" ")]
 
-print(bar_size, demands_number, cut_sizes, demands)
-
 def gerar_padroes_corte_maximal(tamanho_barra, tamanhos):
     
     n_itens = len(tamanhos)
@@ -34,11 +32,29 @@ def gerar_padroes_corte_maximal(tamanho_barra, tamanhos):
 
 patterns = gerar_padroes_corte_maximal(bar_size, cut_sizes)
 
-
+#demandas de cada corte
 demands_indexes = [[0] * len(patterns) for _ in range(demands_number)]
 for x in range(demands_number):
     for i in range(len(patterns)):
         demands_indexes[x][i] = patterns[i][x]
 
-print(patterns)
-print(demands_indexes)
+#desperdicios
+waste = [0]*len(patterns)
+for x in range(len(patterns)):
+    cut_total = 0
+    for i in range(demands_number):
+        cut_total += cut_sizes[i]*patterns[x][i]
+    waste[x] = bar_size - cut_total
+
+print("cut's patterns:",patterns)
+print("wastes per patterns:",waste)
+print("demands of each cut size per pattern:",demands_indexes)
+
+#eq de minimizacao
+minimize = "minimize: "
+for i in range(len(waste)):
+    if i == len(waste) - 1: minimize += str(waste[i]) + "*x" + str(i)
+    else: minimize += str(waste[i]) + "*x" + str(i) + " + "
+
+
+print(minimize)

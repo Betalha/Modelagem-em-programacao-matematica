@@ -1,3 +1,11 @@
+from ortools.linear_solver import pywraplp
+
+# declara o solver: se PLI, usa-se SCIP; se PL, usa-se GLOP.
+solver = pywraplp.Solver.CreateSolver('SCIP')
+
+# declara um número muito grande caso seja necessário usar no modelo
+infinity = solver.infinity()
+
 bar_size = int(input("enter the bar size: "))
 
 demands_number = int(input("enter the number of demands: "))
